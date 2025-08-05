@@ -72,23 +72,6 @@ public class Program {
         String persons = "Павел Андреевич = 10000; Анна Петровна = 2000; Борис = 10;";
         this.addPersonString(persons);
 
-        // test
-        Map<String, String> map = new HashMap<>();
-        map.put("AAA", "10");
-        map.put("BBB", "20");
-        map.put("CCC", "30");
-        String value = map.get("CCC");
-        System.out.printf("Value: %2s\n", value);
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            System.out.printf("Key: %2s, Value: %2s\n", entry.getKey(), entry.getValue());
-        }
-
-
-        int index = 4;
-        Product product = this.products.get(index);
-        System.out.printf("\nHashCode '%s' = %d", product.getName(), product.hashCode());
-        // System.out.println(this.products.get(5).equals(this.products.get(4)));
-
         this.showProducts();
         this.showPersons();
     }
