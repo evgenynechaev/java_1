@@ -28,7 +28,7 @@ public class Person {
         }
 
         if (name.length() < minNameSize) {
-            System.out.printf("ОШИБКА: Имя не может быть короче %d символов",  minNameSize);
+            System.out.printf("ОШИБКА: Имя не может быть короче %d символов\n",  minNameSize);
             return;
         }
 
@@ -36,7 +36,12 @@ public class Person {
         try {
             wallet = Float.parseFloat(list[1].trim());
         } catch (NumberFormatException | NullPointerException nfe) {
-            System.out.printf("Неправильно введено число в строке '(%s)'.\n", text);
+            System.out.printf("ОШИБКА: Неправильно введено число в строке '(%s)'.\n", text);
+            return;
+        }
+
+        if(wallet < 0) {
+            System.out.println("ОШИБКА: Деньги не могут быть отрицательными.");
             return;
         }
 
