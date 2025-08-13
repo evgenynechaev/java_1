@@ -4,15 +4,10 @@ import java.util.*;
 
 public class Person {
     private String name = null;
-    private float wallet = -1;
-    private final ArrayList<Product> products = new ArrayList<>();
+    private double wallet = -1;
+    private final ArrayList<DiscountProduct> products = new ArrayList<>();
 
-    private static final int minNameSize = 3;
-
-    public Person() {
-        this.inputName();
-        this.inputWallet();
-    }
+    private static final int MIN_NAME_SIZE = 3;
 
     public Person(String text) {
         String[] list = text.split("=");
@@ -27,14 +22,14 @@ public class Person {
             return;
         }
 
-        if (name.length() < minNameSize) {
-            System.out.printf("ОШИБКА: Имя не может быть короче %d символов\n",  minNameSize);
+        if (name.length() < MIN_NAME_SIZE) {
+            System.out.printf("ОШИБКА: Имя не может быть короче %d символов\n", MIN_NAME_SIZE);
             return;
         }
 
-        float wallet;
+        double wallet;
         try {
-            wallet = Float.parseFloat(list[1].trim());
+            wallet = Double.parseDouble(list[1].trim());
         } catch (NumberFormatException | NullPointerException nfe) {
             System.out.printf("ОШИБКА: Неправильно введено число в строке '(%s)'.\n", text);
             return;
@@ -49,28 +44,12 @@ public class Person {
         this.wallet = wallet;
     }
 
-    public Person(String name, float wallet) {
-        if(isValidName(name)) {
-            this.name = name;
-        } else {
-            System.out.println("ОШИБКА: Неправильно введено имя покупателя");
-            this.inputName();
-        }
-
-        if(isValidWallet(wallet)) {
-            this.wallet = wallet;
-        } else {
-            System.out.println("ОШИБКА: Неправильно введена сумма денег");
-            this.inputWallet();
-        }
-    }
-
     @Override
     public String toString() {
-        return String.format("%s, в кошельке %.2f. %s",
+        return String.format("%s, в кошельке %.2f.\n\t%s",
                 this.name,
                 this.wallet,
-                !this.products.isEmpty() ? String.format("Покупки: %s", this.delimiterString(this.products)) : "Ничего не куплено");
+                !this.products.isEmpty() ? String.format("Покупки:\n\t%s", this.delimiterString(this.products)) : "Ничего не куплено");
     }
 
     @Override
@@ -81,7 +60,7 @@ public class Person {
 
         if(object instanceof Person person) {
             return Objects.equals(this.name, person.name) &&
-                    Float.compare(this.wallet, person.wallet) == 0 &&
+                    Double.compare(this.wallet, person.wallet) == 0 &&
                     Arrays.equals(this.products.toArray(), person.products.toArray());
         }
 
@@ -93,20 +72,8 @@ public class Person {
         return Objects.hash(this.name, this.wallet) * Arrays.hashCode(this.products.toArray());
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getName() {
         return this.name;
-    }
-
-    public void setWallet(float wallet) {
-        this.wallet = wallet;
-    }
-
-    public float getWallet() {
-        return this.wallet;
     }
 
     public boolean isValid() {
@@ -114,87 +81,32 @@ public class Person {
     }
 
     private boolean isValidName(String name) {
-        return name != null && name.length() >= minNameSize;
+        return name != null && name.length() >= MIN_NAME_SIZE;
     }
 
-    private boolean isValidWallet(float wallet) {
+    private boolean isValidWallet(double wallet) {
         return wallet >= 0;
     }
 
-    private void inputName() {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.printf("Введите имя покупателя %s", String.format("(%s) ", this.name));
-            String name = scanner.nextLine();
-            if (name.isEmpty()) {
-                System.out.println("Имя не может быть пустым");
-                continue;
-            }
-
-            if (name.length() < minNameSize) {
-                System.out.println("Имя не может быть короче 3 символов");
-                continue;
-            }
-
-            this.setName(name);
-            return;
-        }
-    }
-
-    private void inputWallet() {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.printf("Введите сумму денег %s\n", String.format("(%.2f) ", this.wallet));
-            String input = scanner.nextLine();
-
-            if (input.isEmpty() && this.wallet < 0)
-            {
-                System.out.println("ОШИБКА: Должна быть указана сумма денег");
-                continue;
-            }
-
-            if (input.isEmpty())
-                return;
-
-            float wallet;
-            try {
-                wallet = Float.parseFloat(input);
-            } catch (NumberFormatException nfe) {
-                System.out.printf("Неправильно введено число (%s). Повторите ввод.\n", input);
-                continue;
-            } catch (NullPointerException npe) {
-                System.out.println("Неправильно введено число. Повторите ввод.\n");
-                continue;
-            }
-
-            if (!this.isValidWallet(wallet))
-            {
-                System.out.println("Деньги не могут быть отрицательными");
-                continue;
-            }
-
-            this.setWallet(wallet);
-        }
-    }
-
-    public void shopping(Product product) {
+    public void shopping(DiscountProduct product) {
         if (product == null) {
             System.out.println("Продукт не найден и не может быть добавлен");
             return;
         }
 
         if(this.purchasedSum() + product.getPrice() <= this.wallet) {
-            Product newProduct = new Product(product.getName(), product.getPrice());
-            this.products.add(newProduct);
-            System.out.printf("'%s' купил '%s'\n", this.name, newProduct.getName());
+            // DiscountProduct newProduct = new DiscountProduct(product.getName(), product.getPrice());
+            // this.products.add(newProduct);
+            this.products.add(product);
+            System.out.printf("'%s' купил '%s'\n", this.name, product.getName());
         } else  {
             System.out.printf("%s не может позволить себе %s\n", this.name, product.getName());
         }
     }
 
-    private float purchasedSum()
+    private double purchasedSum()
     {
-        float sum = 0;
+        double sum = 0;
         for(Product product : this.products) {
             sum += product.getPrice();
         }
@@ -213,8 +125,8 @@ public class Person {
         }
     }
 
-    public String delimiterString(ArrayList<Product> list) {
-        return String.join("; ", list.stream().map(Object::toString).toList());
+    public String delimiterString(ArrayList<DiscountProduct> list) {
+        return String.join("\n\t", list.stream().map(Object::toString).toList());
     }
 
 }
