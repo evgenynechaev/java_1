@@ -1,8 +1,8 @@
-import ru.rtk.att01.*;
+import ru.rtk.homework07.*;
 
 public class App {
     public static void main(String[] args) {
         // Запуск программы
-        new Program();
+        new Start();
     }
 }
