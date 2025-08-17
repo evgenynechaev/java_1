@@ -3,12 +3,13 @@ package ru.rtk.homework07;
 import java.util.*;
 
 public class Start {
-    private final ArrayList<Product> products = new ArrayList<>();
+    private final ArrayList<DiscountProduct> products = new ArrayList<>();
     private final ArrayList<Person> persons = new ArrayList<>();
 
     public Start() {
-        System.out.println("Промежуточная аттестация 1");
-        System.out.println("--------------------------");
+        System.out.println("       Домашнее задание по теме");
+        System.out.println("'Понятия ООП: наследование, полиморфизм'");
+        System.out.println("----------------------------------------");
         while(true) {
             Scanner scanner = new Scanner(System.in);
 
@@ -20,7 +21,7 @@ public class Start {
             System.out.println("5) Совершить покупки (меню)");
             System.out.println("6) Совершить покупки (ручной ввод)");
             System.out.println("9) Очистить данные");
-            System.out.println("0) Выход");
+            System.out.println("Q) Выход");
             System.out.print("Выберите пункт: ");
             String choice = scanner.nextLine();
 
@@ -52,21 +53,20 @@ public class Start {
                 this.clearData();
             }
 
-            if (choice.equals("0")) {
+            if (choice.equalsIgnoreCase("Q")) {
                 break;
             }
         }
-
     }
 
     private void fillTestData() {
         /*
+        Хлеб = 40 = 10 = 2025-09-20; Молоко = 60; Торт = 1000 = 20 = 2025-09-16; Кофе растворимый = 879; Масло = 150 = 30 = 2025-08-15; = ;;
         Павел Андреевич = 10000; Анна Петровна = 2000; Борис = 10
-        Хлеб = 40; Молоко = 60; Торт = 1000; Кофе растворимый = 879; Масло = 150
         */
         this.clearData();
 
-        String products = "Хлеб = 40; Молоко = 60; Торт = 1000; Кофе растворимый = 879; Масло = 150; = ;;";
+        String products = "Хлеб = 40 = 10 = 2025-09-20; Молоко = 60; Торт = 1000 = 20 = 2025-09-16; Кофе растворимый = 879; Масло = 150 = 30 = 2025-08-15; = ;;";
         this.addProductString(products);
 
         String persons = "Павел Андреевич = 10000; Анна Петровна = 2000; Борис = 10;";
@@ -81,7 +81,7 @@ public class Start {
         System.out.println();
         for(String item: list)
         {
-            Product product = new Product(item);
+            DiscountProduct product = new DiscountProduct(item);
             if(product.isValid())
             {
                 this.products.add(product);
@@ -110,6 +110,7 @@ public class Start {
         do {
             System.out.println();
             System.out.println("Введите Продукты в формате 'Продукт1 = Стоимость1; Продукт2 = Стоимость2'");
+            System.out.println("Или в формате 'Продукт1 = Стоимость1 = Скидка_в_процентах1 = Дата_окончания_ГГГГ-ММ-ДД; и т.д.'");
             System.out.println("END - закончить ввод");
             String text = scanner.nextLine();
             if (text.trim().equalsIgnoreCase("end")) {
@@ -193,7 +194,7 @@ public class Start {
 
             while (true) {
                 System.out.println("\nВыберите продукт:");
-                for (Product product : this.products) {
+                for (DiscountProduct product : this.products) {
                     System.out.printf("%d) %s\n", products.indexOf(product) + 1, product);
                 }
                 System.out.println("Q) Выход");
@@ -214,7 +215,7 @@ public class Start {
                     System.out.println("Неправильно введено число. Повторите ввод.\n");
                     continue;
                 }
-                Product product = this.products.get(choiceProduct - 1);
+                DiscountProduct product = this.products.get(choiceProduct - 1);
 
                 person.shopping(product);
                 break;
@@ -265,8 +266,8 @@ public class Start {
                 continue;
             }
 
-            Product selectedProduct = null;
-            for(Product product : this.products) {
+            DiscountProduct selectedProduct = null;
+            for(DiscountProduct product : this.products) {
                 if(product.getName().equalsIgnoreCase(productName)) {
                     selectedProduct = product;
                     System.out.printf("Выбран продукт '%s'\n", selectedProduct.getName());
