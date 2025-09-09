@@ -22,7 +22,7 @@ public class Task3 {
             add("четыре");
         }};
 
-        PowerfulSet<Integer> ps = new PowerfulSet<>();
+        PowerfulSet ps = new PowerfulSet();
 
         System.out.println();
         System.out.println("Integer Intersection:");
@@ -39,21 +39,19 @@ public class Task3 {
         Set<Integer> elementsRelative = ps.relativeComplement(elements1, elements2);
         System.out.println(elementsRelative);
 
-        PowerfulSet<String> psString = new PowerfulSet<>();
-
         System.out.println();
         System.out.println("String Intersection:");
-        Set<String> elementsStringsIntersection = psString.intersection(elementsStrings1, elementsStrings2);
+        Set<String> elementsStringsIntersection = ps.intersection(elementsStrings1, elementsStrings2);
         System.out.println(elementsStringsIntersection);
 
         System.out.println();
         System.out.println("String Union");
-        Set<String> elementsStringsUnion = psString.union(elementsStrings1, elementsStrings2);
+        Set<String> elementsStringsUnion = ps.union(elementsStrings1, elementsStrings2);
         System.out.println(elementsStringsUnion);
 
         System.out.println();
         System.out.println("String Relative Complement");
-        Set<String> elementsStringsRelative = psString.relativeComplement(elementsStrings1, elementsStrings2);
+        Set<String> elementsStringsRelative = ps.relativeComplement(elementsStrings1, elementsStrings2);
         System.out.println(elementsStringsRelative);
     }
 }

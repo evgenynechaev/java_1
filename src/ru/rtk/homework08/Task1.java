@@ -2,7 +2,6 @@ package ru.rtk.homework08;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Task1 {
 
@@ -20,10 +19,8 @@ public class Task1 {
         this.printArrayList(list);
     }
 
-    public void printArrayList(ArrayList<?> list) {
-        for (Object item : list) {
-            System.out.println(item);
-        }
+    public <T> void printArrayList(ArrayList<T> list) {
+        list.forEach(System.out::println);
     }
 
 }
