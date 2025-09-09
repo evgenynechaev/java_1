@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 public class Task3 {
     public Task3() {
+        System.out.println();
+        System.out.println("Задание 3");
+
         Set<Integer> elements1 = new Set<>();
         elements1.addAll(Arrays.asList(1, 2, 3));
 
