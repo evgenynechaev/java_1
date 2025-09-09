@@ -1,4 +1,4 @@
-import ru.rtk.homework07.Start;
+import ru.rtk.homework08.Start;
 
 public class App {
     public static void main(String[] args) {
