@@ -1,6 +1,7 @@
 package ru.rtk.homework11.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Car implements Serializable {
@@ -27,6 +28,34 @@ public class Car implements Serializable {
     @Override
     public String toString() {
         return String.format("%s, %s, %s, %d, %d",
+                this.number,
+                this.model,
+                this.color,
+                this.mileage,
+                this.cost
+        );
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+
+        if(object instanceof Car car) {
+            return Objects.equals(this.number, car.number) &&
+                    Objects.equals(this.model, car.model) &&
+                    Objects.equals(this.color, car.color) &&
+                    this.mileage == car.mileage &&
+                    this.cost == car.cost;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
                 this.number,
                 this.model,
                 this.color,

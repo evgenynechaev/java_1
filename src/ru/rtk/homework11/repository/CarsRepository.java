@@ -29,4 +29,7 @@ public interface CarsRepository {
     void getMinimalCostAutoColor();
     void getAverageCostByModel(String find);
 
+    void saveDbToFile();
+    void loadDbFromFile();
+
 }

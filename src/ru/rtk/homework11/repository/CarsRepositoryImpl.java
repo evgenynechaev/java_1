@@ -12,6 +12,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         return cars;
     }
 
+    @Override
     public void printDb() {
         System.out.println();
         if(cars.isEmpty()) {
@@ -24,6 +25,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         });
     }
 
+    @Override
     public void clearDb(boolean unconditional) {
         Scanner scanner = new Scanner(System.in);
         if(!unconditional) {
@@ -44,6 +46,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         System.out.println("База данных очищена");
     }
 
+    @Override
     public void getNumbersByColorOrMileage(String find) {
         String[] list = find.split(",");
         if (list.length != 2) {
@@ -69,6 +72,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         System.out.println(result);
     }
 
+    @Override
     public void getCountModelsByCostInterval(String find) {
         String[] list = find.split(",");
         if (list.length != 2) {
@@ -100,6 +104,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         System.out.printf("Уникальные автомобили: %d шт.\n", count);
     }
 
+    @Override
     public void getMinimalCostAutoColor() {
         try {
             Optional<Car> car = Optional.of(this.cars.stream().min(Comparator.comparing(Car::getCost)).get());
@@ -111,6 +116,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         }
     }
 
+    @Override
     public void getAverageCostByModel(String find) {
         final String modelToFind = find.trim();
 
@@ -123,6 +129,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         System.out.printf("Средняя стоимость модели '%s': %.2f\n", modelToFind, average);
     }
 
+    @Override
     public void addCarByPattern(String pattern) {
         Car car = new Car(pattern);
         if (car.isValid()) {
@@ -133,6 +140,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         System.out.println("Автомобиль не добавлен");
     }
 
+    @Override
     public void editCar() {
         this.printDb();
         System.out.print("Выберите запись для редактирования: ");
@@ -147,6 +155,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         }
     }
 
+    @Override
     public void deleteCar() {
         this.printDb();
         System.out.print("Введите номер записи для удаления: ");
@@ -165,6 +174,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         }
     }
 
+    @Override
     public void saveDbToFile() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dbPath))) {
             oos.writeObject(this.cars);
@@ -175,6 +185,7 @@ public class CarsRepositoryImpl implements CarsRepository {
         }
     }
 
+    @Override
     public void loadDbFromFile() {
         File file = new File(dbPath);
         if (!file.exists()) {
